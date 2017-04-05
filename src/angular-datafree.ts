@@ -1,10 +1,14 @@
 import * as angular from "angular";
-import DFQueryFactory from "./factory";
+import DFClientFactory from "./factory";
+import {DatafreeDirective} from "./directive";
 
 module AngularDatafree {
     "use strict";
 
-    angular.module('angular-datafree', ['ngResource'])
-        .factory('DFQuery', ['$resource', DFQueryFactory])
+    angular.module('ae.datafree', ['ngResource'])
+        .factory('DFClientFactory', DFClientFactory)
+        .directive('datafree', () => {
+            return DatafreeDirective;
+        })
     ;
 }

@@ -3,116 +3,64 @@
  */
 
 import ngr = angular.resource;
-import {IQService, extend, IPromise} from "angular";
+import {extend, IHttpPromiseCallbackArg} from "angular";
 
 export default class DFQuery {
 
     private settings: IDFQuerySettings = {
         page: 0,
-        limit: 10
+        limit: 10,
+        dataResponseType: DFDataResponseType.BODY,
+        countProperty: 'x-count'
     };
 
     private total: number = 0;
 
-    private queryMap: IDFQueryMap;
+    private paramsMap: IDFParamsMap;
 
-    constructor(private $resource: ngr.IResourceClass<ngr.IResource<any>>, private $q: IQService, defaultSettings?: IDFQuerySettings, queryMap?: IDFQueryMap) {
+    constructor(
+        private url:string,
+        private method:string = 'GET',
+        defaultSettings?: IDFQuerySettings,
+        paramsMap?: IDFParamsMap
+    ) {
         if (null !== defaultSettings) {
             this.settings = extend({}, this.settings, defaultSettings);
         }
 
-        if (null === queryMap) {
-            this.queryMap = new DFDefaultQueryMap();
+        if (null === paramsMap) {
+            this.paramsMap = new DFDefaultParamsMap();
         } else {
-            this.queryMap = queryMap;
+            this.paramsMap = paramsMap;
         }
-    }
-
-    private buildQueryParams(params: Object = {}): Object {
-        let o:Object = {};
-        let p:Object = extend({}, this.settings, params);
-
-        for (let k in p) {
-            let v = p[k] instanceof Function ? p[k](p) : p[k];
-
-            if (this.queryMap[k]) {
-                o[this.queryMap[k]] = v;
-            } else {
-                o[k] = v;
-            }
-        }
-
-        return o;
-    }
-
-    send(params: Object = {}): IPromise<any> {
-        let defer = this.$q.defer();
-
-        this.$resource.query(this.buildQueryParams(params)).$promise.then(
-            function ($data) {
-                defer.resolve($data);
-            },
-            function($err) {
-                defer.reject($err);
-            }
-        );
-
-        return defer.promise;
-    }
-
-    page(p: number = 0) {
-        return this.send({
-            page: Math.max(p, 0)
-        });
-    }
-
-    next() {
-        return this.page(this.$page + 1);
-    }
-
-    prev() {
-        return this.page(this.$page - 1);
-    }
-
-    first() {
-        return this.page(0);
-    }
-
-    last() {
-        return this.page(Math.ceil(this.total / this.$limit));
-    }
-
-    order(column:string, direction:DFOrderDirection) {
-        this.settings.orderBy = column;
-        this.settings.orderDirection = direction;
-
-        return this.send();
-    }
-
-    limit(limit: number) {
-        this.settings.page = 0;
-        this.settings.limit = limit;
-
-        return this.send();
-    }
-
-    filter(q?:string) {
-        this.settings.filter = q;
-        this.settings.page = 0;
-
-        return this.send();
     }
 
     get $settings(): IDFQuerySettings {
         return this.settings;
     }
 
+    get $url(): string {
+        return this.url;
+    }
+
+    get $method(): string {
+        return this.method;
+    }
+
     get $page(): number {
         return this.settings.page;
     }
 
+    set $page(p: number) {
+        this.settings.page = Math.max(p, 0);
+    }
+
     get $limit(): number {
         return this.settings.limit;
+    }
+
+    set $limit(l: number) {
+        this.settings.limit = Math.max(l, 0);
     }
 
     get $order(): Array<string|DFOrderDirection> {
@@ -122,6 +70,14 @@ export default class DFQuery {
         ];
     }
 
+    set $orderBy(column: string) {
+        this.settings.orderBy = column;
+    }
+
+    set $orderDirection(direction: DFOrderDirection) {
+        this.settings.orderDirection = direction;
+    }
+
     get $filter(): string {
         return this.settings.filter instanceof Function ? this.settings.filter() : this.settings.filter;
     }
@@ -129,17 +85,28 @@ export default class DFQuery {
     get $total(): number {
         return this.total;
     }
+
+    set $total(t: number) {
+        this.total = t;
+    }
+
+    get $paramsMap(): IDFParamsMap {
+        return this.paramsMap;
+    }
 }
 
 export interface IDFQuerySettings {
     page: number;
     limit: number;
+    dataResponseType: DFDataResponseType;
+    countProperty: string;
+    dataProperty?: string;
     orderBy?: string|Function;
     orderDirection?: DFOrderDirection;
     filter?: string|Function;
 }
 
-export interface IDFQueryMap {
+export interface IDFParamsMap {
     page: string;
     limit: string;
     orderBy: string;
@@ -147,7 +114,7 @@ export interface IDFQueryMap {
     filter: string;
 }
 
-export class DFDefaultQueryMap implements IDFQueryMap{
+export class DFDefaultParamsMap implements IDFParamsMap{
     page = 'page';
     limit = 'limit';
     orderBy = 'order_by';
@@ -158,4 +125,9 @@ export class DFDefaultQueryMap implements IDFQueryMap{
 export enum DFOrderDirection {
     ASC,
     DESC
+}
+
+export enum DFDataResponseType {
+    PROPERTY,
+    BODY
 }
