@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "ES5",
+    "allowJs": true,
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "sourceMap": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

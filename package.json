@@ -1,0 +1,36 @@
+{
+  "name": "angular-datafree",
+  "version": "1.0.0",
+  "description": "Render api data on the frontend feely",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/advisors-excel-llc/angular-datafree.git"
+  },
+  "keywords": [
+    "angular",
+    "data",
+    "datafree",
+    "api",
+    "visualization"
+  ],
+  "author": "Alex Boyce <curiosity26@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/advisors-excel-llc/angular-datafree/issues"
+  },
+  "homepage": "https://github.com/advisors-excel-llc/angular-datafree#readme",
+  "devDependencies": {
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2",
+    "webpack": "^2.3.3"
+  },
+  "dependencies": {
+    "@types/angular": "^1.6.14",
+    "@types/angular-resource": "^1.5.8",
+    "angular": "^1.6.4"
+  }
+}
