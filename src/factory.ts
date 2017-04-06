@@ -3,7 +3,7 @@
  */
 import DFQuery, {DFDataResponseType, DFOrderDirection} from "./query";
 import {IHttpService, extend, IHttpPromiseCallbackArg} from "angular";
-import IInjectorService = angular.auto.IInjectorService;
+import {Subscribeable} from "./utilities";
 
 export default class DFClientFactory {
 
@@ -16,17 +16,14 @@ export default class DFClientFactory {
 
 DFClientFactory.$inject = ['$http'];
 
-interface Map<T> {
-    [key: string]: T;
-}
 
-export class DFClient {
-
-    private listeners:Array<Function> = [];
-    private headers: Map<string>;
+export class DFClient extends Subscribeable {
+    private headers: Object;
     private withCredentials:boolean = false;
 
-    constructor(private $http: IHttpService, private query:DFQuery) { }
+    constructor(private $http: IHttpService, private query:DFQuery) {
+        super();
+    }
 
     get $query():DFQuery {
         return this.query;
@@ -36,11 +33,11 @@ export class DFClient {
         this.query = q;
     }
 
-    get $headers(): Map<string> {
+    get $headers(): Object {
         return this.headers;
     }
 
-    set $headers(headers:Map<string>) {
+    set $headers(headers: Object) {
         this.headers = headers;
     }
 
@@ -74,20 +71,10 @@ export class DFClient {
             ? response.data[this.query.$settings.dataProperty] : response.data;
     }
 
-    private dispatch(data) {
+    protected dispatch(data) {
         for(let l of this.listeners) {
             l.bind(this.query, data);
         }
-    }
-
-    subscribe(l:Function) {
-        this.listeners.push(l);
-    }
-
-    unsubscribe(l:Function) {
-        this.listeners = this.listeners.filter((f) => {
-            return f !== l;
-        });
     }
 
     send(params?:Object): Promise<any> {
@@ -114,32 +101,38 @@ export class DFClient {
         return this.send();
     }
 
-    prev() {
+    prev(): Promise<any> {
         return this.page(this.query.$page - 1);
     }
 
-    next() {
+    next(): Promise<any> {
         return this.page(this.query.$page + 1);
     }
 
-    first() {
+    first(): Promise<any> {
         return this.page(0);
     }
 
-    last() {
+    last(): Promise<any> {
         return this.page(Math.ceil(this.query.$total / this.query.$limit));
     }
 
-    limit(l: number) {
+    limit(l: number): Promise<any> {
         this.query.$limit = l;
 
         return this.page(0);
     }
 
-    order(column:string, direction: DFOrderDirection) {
+    order(column:string, direction: DFOrderDirection): Promise<any> {
         this.query.$orderBy = column;
         this.query.$orderDirection = direction;
 
-        this.send();
+        return this.send();
+    }
+
+    filter(q?: string): Promise<any> {
+        this.query.$filter = q;
+
+        return this.first();
     }
 }

@@ -82,6 +82,10 @@ export default class DFQuery {
         return this.settings.filter instanceof Function ? this.settings.filter() : this.settings.filter;
     }
 
+    set $filter(q: string) {
+        this.settings.filter = q;
+    }
+
     get $total(): number {
         return this.total;
     }

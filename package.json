@@ -4,7 +4,8 @@
   "description": "Render api data on the frontend feely",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
@@ -24,13 +25,19 @@
   },
   "homepage": "https://github.com/advisors-excel-llc/angular-datafree#readme",
   "devDependencies": {
-    "tslint": "^5.0.0",
-    "typescript": "^2.2.2",
-    "webpack": "^2.3.3"
-  },
-  "dependencies": {
     "@types/angular": "^1.6.14",
     "@types/angular-resource": "^1.5.8",
-    "angular": "^1.6.4"
+    "angular": "^1.6.4",
+    "angular-mocks": "^1.6.4",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-webpack": "^1.5.0",
+    "mocha": "^3.2.0",
+    "ts-loader": "^2.0.3",
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2",
+    "webpack": "^2.3.3",
+    "webpack-node-externals": "^1.5.4"
   }
 }
