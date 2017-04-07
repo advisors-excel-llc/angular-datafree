@@ -10,21 +10,27 @@ module.exports = {
     devtool: "source-map",
     externals: [nodeExternals()],
     output: {
-        filename: "angular-datafree.min.js",
-        chunkFilename: "[id].angular-datafree.js"
+        filename: "angular-datafree.build.min.js",
+        chunkFilename: "[id].angular-datafree.js",
+        sourceMapFilename: "[file].map",
+        devtoolLineToLine: true
     },
     module: {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loader: 'ts',
+                loader: 'ts-loader',
                 exclude: /node_modules/
             }
         ]
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
+            compress: { warnings: false },
+            minimize: true
         })
-    ]
+    ],
+    resolve: {
+        extensions: ['.ts', '.js', '.tsx', '.jsx']
+    }
 };
