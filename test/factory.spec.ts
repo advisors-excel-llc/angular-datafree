@@ -1,7 +1,6 @@
 /**
  * Created by alex.boyce on 4/7/17.
  */
-/// <reference path="./typings.d.ts" />
 
 import chai = require('chai');
 import expect = chai.expect;
