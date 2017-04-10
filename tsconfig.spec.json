@@ -1,0 +1,17 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "lib": ["dom", "es2015.promise", "es5", "es6"],
+    "types" : [
+      "angular",
+      "angular-mocks",
+      "mocha"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

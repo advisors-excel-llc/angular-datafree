@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Fri Apr 07 2017 11:33:41 GMT-0400 (EDT)
-var webpackConfig = require('./webpack.config');
 
 module.exports = function(config) {
   config.set({
@@ -11,37 +10,44 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha', 'chai', 'karma-typescript'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: './test/test.ts', included: false}
+        { pattern: './src/**/*.ts' },
+        { pattern: './test/**/*.ts' }
     ],
 
     // list of files to exclude
     exclude: [
     ],
 
+    mocha: {ui: 'bdd'},
+
+    client: {
+        captureConsole: true,
+        mocha: {
+            timeout: 6000
+        }
+    },
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        "test/**/*.ts": ["webpack"]
-    },
-
-    webpack: {
-      module: webpackConfig.module,
-      resolve: webpackConfig.resolve
+        "**/*.ts": ["karma-typescript"]
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'karma-typescript'],
 
+    karmaTypescriptConfig: {
+        tsconfig: "./tsconfig.spec.json"
+    },
 
-    // web server port
+      // web server port
     port: 9876,
 
 
@@ -65,7 +71,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous

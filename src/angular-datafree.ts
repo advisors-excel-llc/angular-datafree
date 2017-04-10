@@ -1,12 +1,13 @@
 import * as angular from "angular";
-import DFClientFactory from "./factory";
+import {DFClientFactory} from "./factory";
 import {DatafreeDirective, DatafreeEmpty, DatafreeOrder, DatafreePager, DatafreeRow} from "./directive";
+import {IHttpService, IQService} from "angular";
 
-module AngularDatafree {
-    "use strict";
-
-    angular.module('ae.datafree', ['ngResource'])
-        .factory('DFClientFactory', DFClientFactory)
+export module AngularDatafree {
+    angular.module('ae.datafree', ['ng'])
+        .factory('DFClientFactory', ($http: IHttpService, $q: IQService) => {
+            return new DFClientFactory($http, $q);
+        })
         .directive('datafree', () => {
             return new DatafreeDirective();
         })
@@ -24,5 +25,3 @@ module AngularDatafree {
         })
     ;
 }
-
-export default AngularDatafree;

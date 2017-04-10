@@ -29,8 +29,5 @@ module.exports = {
             compress: { warnings: false },
             minimize: true
         })
-    ],
-    resolve: {
-        extensions: ['.ts', '.js', '.tsx', '.jsx']
-    }
+    ]
 };

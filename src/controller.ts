@@ -2,9 +2,9 @@
  * Created by alex.boyce on 4/5/17.
  */
 
-import {IController} from "@types/angular";
+import {IController, IPromise} from "angular";
 import DFQuery, {DFOrderDirection} from "./query";
-import DFClientFactory, {DFClient} from "./factory";
+import {DFClientFactory,DFClient} from "./factory";
 import {Subscribeable} from "./utilities";
 
 export class DatafreeDirectiveController extends Subscribeable implements IController {
@@ -34,27 +34,27 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
         return this.data;
     }
 
-    prev(): Promise<any> {
+    prev(): IPromise<any> {
         return this.client.prev();
     }
 
-    next(): Promise<any> {
+    next(): IPromise<any> {
         return this.client.next();
     }
 
-    first(): Promise<any> {
+    first(): IPromise<any> {
         return this.client.first();
     }
 
-    last(): Promise<any> {
+    last(): IPromise<any> {
         return this.client.last();
     }
 
-    order(column: string, direction: DFOrderDirection): Promise<any> {
+    order(column: string, direction: DFOrderDirection): IPromise<any> {
         return this.client.order(column, direction);
     }
 
-    limit(l: number): Promise<any> {
+    limit(l: number): IPromise<any> {
         return this.client.limit(l);
     }
 

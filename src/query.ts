@@ -2,17 +2,18 @@
  * Created by alex.boyce on 4/4/17.
  */
 
-import ngr = angular.resource;
-import {extend, IHttpPromiseCallbackArg} from "angular";
+import {extend} from "angular";
 
 export default class DFQuery {
 
     private settings: IDFQuerySettings = {
         page: 0,
-        limit: 10,
-        dataResponseType: DFDataResponseType.BODY,
-        countProperty: 'x-count'
+        limit: 10
     };
+
+    private dataResponseType:DFDataResponseType = DFDataResponseType.BODY;
+    private countProperty:string = 'x-count';
+    private dataProperty:string;
 
     private total: number = 0;
 
@@ -24,14 +25,14 @@ export default class DFQuery {
         defaultSettings?: IDFQuerySettings,
         paramsMap?: IDFParamsMap
     ) {
-        if (null !== defaultSettings) {
+        if (defaultSettings != null) {
             this.settings = extend({}, this.settings, defaultSettings);
         }
 
-        if (null === paramsMap) {
+        this.paramsMap = paramsMap;
+
+        if (this.paramsMap == null) {
             this.paramsMap = new DFDefaultParamsMap();
-        } else {
-            this.paramsMap = paramsMap;
         }
     }
 
@@ -97,14 +98,36 @@ export default class DFQuery {
     get $paramsMap(): IDFParamsMap {
         return this.paramsMap;
     }
+
+    get $dataResponseType():DFDataResponseType {
+        return this.dataResponseType;
+    }
+
+    set $dataResponseType(type: DFDataResponseType) {
+        this.dataResponseType = type;
+    }
+
+    get $countProperty():string {
+        return this.countProperty;
+    }
+
+    set $countProperty(prop: string) {
+        this.countProperty = prop;
+    }
+
+    get $dataProperty():string {
+        return this.dataProperty;
+    }
+
+    set $dataProperty(prop: string) {
+        this.dataProperty = prop;
+    }
+
 }
 
 export interface IDFQuerySettings {
     page: number;
     limit: number;
-    dataResponseType: DFDataResponseType;
-    countProperty: string;
-    dataProperty?: string;
     orderBy?: string|Function;
     orderDirection?: DFOrderDirection;
     filter?: string|Function;
