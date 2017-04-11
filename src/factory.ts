@@ -21,15 +21,15 @@ export class DFClient extends Subscribeable {
     private headers: Object;
     private withCredentials:boolean = false;
 
-    constructor(private $http: IHttpService, private $q:IQService, private query:DFQuery) {
+    constructor(private $http: IHttpService, private $q: IQService, private query: DFQuery) {
         super();
     }
 
-    get $query():DFQuery {
+    get $query(): DFQuery {
         return this.query;
     }
 
-    set $query(q:DFQuery) {
+    set $query(q: DFQuery) {
         this.query = q;
     }
 
@@ -42,8 +42,8 @@ export class DFClient extends Subscribeable {
     }
 
     private buildQueryParams(params: Object = {}): Object {
-        let o:Object = {};
-        let p:Object = extend({}, this.query.$settings, params);
+        let o: Object = {};
+        let p: Object = extend({}, this.query.$settings, params);
 
         for (let k in p) {
             let v = p[k] instanceof Function ? p[k](p) : p[k];
@@ -58,7 +58,7 @@ export class DFClient extends Subscribeable {
         return o;
     }
 
-    private handleResponse(response: IHttpPromiseCallbackArg<any>): any {
+    protected handleResponse(response: IHttpPromiseCallbackArg<any>): any {
         if (this.query.$dataResponseType === DFDataResponseType.BODY) {
             this.query.$total = parseInt(response.headers(this.query.$countProperty), 10);
 
@@ -77,10 +77,20 @@ export class DFClient extends Subscribeable {
         }
     }
 
-    send(params?:Object): IPromise<any> {
-        let defer:IDeferred<any> = this.$q.defer();
+    protected sendRequest(params?: Object): IPromise<any> {
+        return this.$http({
+            url: this.query.$url,
+            params: this.buildQueryParams(params),
+            method: this.query.$method,
+            withCredentials: this.withCredentials,
+            headers: this.headers,
+        });
+    }
 
-        this.$http({
+    send(params?: Object): IPromise<any> {
+        let defer: IDeferred<any> = this.$q.defer();
+
+        this.sendRequest({
             url: this.query.$url,
             params: this.buildQueryParams(params),
             method: this.query.$method,
@@ -117,7 +127,31 @@ export class DFClient extends Subscribeable {
     }
 
     last(): IPromise<any> {
-        return this.page(Math.ceil(this.query.$total / this.query.$limit));
+        if (null == this.query.$total ||  this.query.$total == 0) {
+            let defer:IDeferred<any> = this.$q.defer();
+
+            // We don't have a total, so we need to get one. Do so without triggering the listeners
+            this.sendRequest({page: 0, limit: 1}).then((response) => {
+                this.handleResponse(response);
+                // pages start a 0, so reduce the last page by 1
+                let page:number = Math.ceil(this.query.$total / this.query.$limit) - 1;
+
+                this.page(page).then((data) => {
+                    defer.resolve(data);
+                }, (err) => {
+                    defer.reject(err);
+                })
+            }, (err) => {
+                defer.reject(err);
+            });
+
+            return defer.promise;
+        }
+
+        // pages start a 0, so reduce the last page by 1
+        let page:number = Math.ceil(this.query.$total / this.query.$limit) - 1;
+
+        return this.page(page);
     }
 
     limit(l: number): IPromise<any> {

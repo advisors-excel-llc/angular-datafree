@@ -11,9 +11,9 @@ export default class DFQuery {
         limit: 10
     };
 
-    private dataResponseType:DFDataResponseType = DFDataResponseType.BODY;
-    private countProperty:string = 'x-count';
-    private dataProperty:string;
+    private dataResponseType: DFDataResponseType = DFDataResponseType.BODY;
+    private countProperty: string = 'X-Count';
+    private dataProperty: string;
 
     private total: number = 0;
 
@@ -149,12 +149,12 @@ export class DFDefaultParamsMap implements IDFParamsMap{
     filter = 'q';
 }
 
-export enum DFOrderDirection {
-    ASC,
-    DESC
+export class DFOrderDirection {
+    static ASC = 'ASC';
+    static DESC = 'DESC';
 }
 
-export enum DFDataResponseType {
-    PROPERTY,
-    BODY
+export class DFDataResponseType {
+    static PROPERTY = 'PROPERTY';
+    static BODY = 'BODY';
 }

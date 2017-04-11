@@ -1,16 +1,16 @@
-
 export class MockDataset {
     public data: Array<IMockData>;
 
     constructor() {
-        this.data = [{
-            "id": 1,
-            "first_name": "Peter",
-            "last_name": "Perkins",
-            "email": "pperkins0@360.cn",
-            "gender": "Male",
-            "ip_address": "25.105.205.41"
-        },
+        this.data = [
+            {
+                "id": 1,
+                "first_name": "Peter",
+                "last_name": "Perkins",
+                "email": "pperkins0@360.cn",
+                "gender": "Male",
+                "ip_address": "25.105.205.41"
+            },
             {
                 "id": 2,
                 "first_name": "Angela",
