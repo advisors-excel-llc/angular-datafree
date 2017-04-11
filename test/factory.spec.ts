@@ -19,7 +19,6 @@ describe('Datafree Client Body', () => {
     let dfFactory:DFClientFactory;
     let $httpBackend:IHttpBackendService;
     let $http:IHttpService;
-    let mockData = (new MockDataset()).data;
 
     beforeEach(angular.mock.module('ae.datafree'));
 
@@ -38,7 +37,7 @@ describe('Datafree Client Body', () => {
                 let orderBy = params.order_by;
                 let orderDir = params.order_direction;
                 let filter = params.q;
-                let md:Array<IMockData> = mockData;
+                let md:Array<IMockData> = MockDataset.data;
                 let data:Array<IMockData>;
                 let start:number = page * limit;
 
@@ -119,6 +118,9 @@ describe('Datafree Client Body', () => {
 
     it('should get first page', (done:Function) => {
         $httpBackend.expectGET(/\/query/);
+
+        client.$query.$orderBy = 'id';
+        client.$query.$orderDirection = DFOrderDirection.ASC;
 
         let promise:IPromise<Array<Object>> = client.first();
 
@@ -311,7 +313,6 @@ describe('Datafree Client Property', () => {
     let dfFactory: DFClientFactory;
     let $httpBackend: IHttpBackendService;
     let $http: IHttpService;
-    let mockData = (new MockDataset()).data;
 
     beforeEach(angular.mock.module('ae.datafree'));
 
@@ -334,7 +335,7 @@ describe('Datafree Client Property', () => {
                 let orderBy = params.order_by;
                 let orderDir = params.order_direction;
                 let filter = params.q;
-                let md: Array<IMockData> = mockData;
+                let md: Array<IMockData> = MockDataset.data;
                 let data: Object;
                 let start: number = page * limit;
 
@@ -407,7 +408,7 @@ describe('Datafree Client Property', () => {
                 page: 0,
                 limit: 10
             }
-        }).then((res) => {
+        }).then((res:any) => {
             expect(res.data).to.have.hasOwnProperty('data');
             expect(res.data).to.have.hasOwnProperty('count');
             expect(res.data.data).to.be.an('array');
@@ -421,6 +422,9 @@ describe('Datafree Client Property', () => {
 
     it('should get first page', (done: Function) => {
         $httpBackend.expectGET(/\/query/);
+
+        client.$query.$orderBy = 'id';
+        client.$query.$orderDirection = DFOrderDirection.ASC;
 
         let promise: IPromise<Array<Object>> = client.first();
 

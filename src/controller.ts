@@ -14,8 +14,15 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
 
     private data:any;
 
+    protected dataListener:Function;
+
     constructor(private clientFactory:DFClientFactory) {
         super();
+
+        this.dataListener = ((data) => {
+            this.data = data;
+            this.dispatch(data);
+        }).bind(this);
     }
 
     protected dispatch(data) {
@@ -23,11 +30,6 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
         this.listeners.forEach(function(l) {
             l.bind($self, data)();
         });
-    }
-
-    private dataListener(data) {
-        this.data = data;
-        this.dispatch(data);
     }
 
     get $data(): any {
@@ -63,9 +65,9 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
     }
 
     $onInit() {
-        if (null !== this.query && null === this.client) {
+        if (null != this.query && null == this.client) {
             this.client = this.clientFactory.createClient(this.query);
-        } else if (null === this.query && null === this.client) {
+        } else if (null == this.query && null == this.client) {
             throw new Error("Either a DBQuery or a DBClient object must be provided to Datafree.");
         }
 
@@ -103,24 +105,30 @@ export class DatafreePagerDirectiveController implements IController {
     protected maxPages:number = 1;
     protected total:number = 0;
 
-    dataChange() {
-        this.currentPage = this.datafree.query.$page;
-        this.limit = this.datafree.query.$limit;
-        this.total = this.datafree.query.$total;
-        this.maxPages = Math.ceil(this.total / this.limit);
+    private dataChange:Function;
 
-        let median = Math.floor(this.numberLimit / 2);
+    $onInit() {
+        this.dataChange = (() => {
+            return (() => {
+                this.currentPage = this.datafree.client.$query.$page + 1; // query.$page starts at 0, pager starts at 1
+                this.limit = this.datafree.client.$query.$limit;
+                this.total = this.datafree.client.$query.$total;
+                this.maxPages = Math.ceil(this.total / this.limit);
 
-        this.numbers = [];
+                let median = Math.floor(this.numberLimit / 2);
 
-        if (median > 0) {
-            let start = Math.max(1, this.currentPage - median);
-            let max = Math.min(start + this.numberLimit, this.maxPages);
+                this.numbers = [];
 
-            for (let i = start; i <= max; i++) {
-                this.numbers.push(i);
-            }
-        }
+                if (median > 0) {
+                    let start = Math.max(1, Math.min(this.maxPages - this.numberLimit + 1, this.currentPage - median));
+                    let max = Math.min(start + this.numberLimit, this.maxPages + 1);
+
+                    for (let i = start; i < max; i++) {
+                        this.numbers.push(i);
+                    }
+                }
+            }).bind(this);
+        })();
     }
 
     $postLink() {

@@ -73,7 +73,7 @@ export class DFClient extends Subscribeable {
 
     protected dispatch(data) {
         for(let l of this.listeners) {
-            l.bind(this.query, data)();
+            l.bind(this, data)();
         }
     }
 
@@ -100,7 +100,6 @@ export class DFClient extends Subscribeable {
             let data = this.handleResponse(response);
             defer.resolve(data);
             this.dispatch(data);
-
         }, (reason) => {
             defer.reject(reason);
         });

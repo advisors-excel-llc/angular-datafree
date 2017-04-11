@@ -28,7 +28,6 @@ gulp.task('ng-template', function() {
     return gulp.src('views/**/*.html')
         .pipe(templateCache({
             filename: 'angular-datafree-templates.js',
-            root: '/views/',
             module: 'ae.datafree.tpls',
             standalone: true
         }))

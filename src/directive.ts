@@ -46,13 +46,13 @@ export class DatafreeRow implements IDirective {
                     parent.append(transEl);
                 });
             });
+        };
 
-            $df.subscribe(watch);
+        $df.subscribe(watch);
 
-            scope.$on('$destroy', () => {
-                $df.unsubscribe(watch);
-            })
-        }
+        scope.$on('$destroy', () => {
+            $df.unsubscribe(watch);
+        })
     }
 }
 
@@ -68,15 +68,38 @@ export class DatafreeEmpty implements IDirective {
         transFn: ITranscludeFunction
     ) => {
         let tE:JQuery;
+        let tP:JQuery;
+
+        let show:Function = (e:JQuery) => {
+            if (e != null) {
+                if (e.show != null) {
+                    e.show();
+                } else {
+                    tP.append(e);
+                }
+            }
+        };
+
+        let hide:Function = (e:JQuery) => {
+            if (e != null) {
+                if (e.hide != null) {
+                    e.hide();
+                } else {
+                    e.remove();
+                }
+            }
+        };
 
         let watch: Function = (data) => {
-            if (isUndefined(data)
-                || (isArray(data) && data.length === 0)
-                || (isObject(data) && Object.keys(data).length > 0)
-            ) {
-                tE.show();
-            } else {
-                tE.hide();
+            if (tE != null) {
+                if (data != null
+                    && ((isArray(data) && data.length === 0)
+                        || (!isArray(data) && isObject(data) && Object.keys(data).length > 0))
+                ) {
+                    show(tE);
+                } else {
+                    hide(tE);
+                }
             }
         };
 
@@ -88,6 +111,7 @@ export class DatafreeEmpty implements IDirective {
 
         transFn((transEl:JQuery, transScope: IScope) => {
             tE = transEl;
+            tP = e.parent();
             transEl.append(e.children());
             e.parent().append(transEl);
         })
@@ -108,7 +132,7 @@ export class DatafreePager implements IDirective {
         nextLabel: '@?',
         lastLabel: '@?'
     };
-    templateUrl = '/views/datafree-pager.html';
+    templateUrl = 'datafree-pager.html';
     bindToController = true;
     controllerAs = '$pager';
     controller = DatafreePagerDirectiveController;
@@ -127,9 +151,9 @@ export class DatafreeOrder implements IDirective {
     link:IDirectiveLinkFn = (scope:IScope, e: JQuery, attrs: IAttributes, $df: DatafreeDirectiveController) => {
         scope.direction = null;
 
-        function checkSort() {
-            let column = $df.query.$orderBy;
-            let direction = $df.query.$orderDirection;
+        let checkSort:Function = () => {
+            let column = $df.client.$query.$orderBy;
+            let direction = $df.client.$query.$orderDirection;
 
             e.addClass('sortable');
 
@@ -137,7 +161,7 @@ export class DatafreeOrder implements IDirective {
                 e.addClass(direction === DFOrderDirection.DESC ? 'sort-down' : 'sort-up');
                 scope.direction = direction;
             }
-        }
+        };
 
         $df.subscribe(checkSort);
 
@@ -153,7 +177,7 @@ export class DatafreeOrder implements IDirective {
 
             let direction = scope.direction;
 
-            if (scope.column === $df.query.$orderBy || direction === null) {
+            if (scope.column === $df.client.$query.$orderBy || direction === null) {
                 direction = direction === DFOrderDirection.ASC ? 'DESC' : 'ASC';
             }
 
