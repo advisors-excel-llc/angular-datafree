@@ -236,6 +236,8 @@ This is a very customizable pager element. Using attributes on the element, you 
 
 If you want to use your own template for the page, rather than the default one provided, simply do the following:
 
+Please refer to the `views/datafree-pager.html` file for reference. The `DatafreePagerDirectiveController` is available via the `$pager` variable in the template.
+
 ```js
 // If you want to load from a string value
 angular.module('myApp', ['ae.datafree'])
