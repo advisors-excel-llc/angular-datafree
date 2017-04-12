@@ -1,42 +1,39 @@
 <ul class="datafree-pager">
-    <li ng-if="$pager.showFirst" ng-click="$pager.first()" ng-class="{'disabled': $pager.currentPage == 1}">
+    <li ng-if="$pager.showFirst" ng-class="{'disabled': $pager.currentPage == 1}">
         <a href="javascript:void(0);" ng-click="$pager.first()" ng-disabled="$pager.currentPage == 1"
            ng-class="{'disabled': $pager.currentPage == 1}">
             {{ $pager.firstLabel }}
         </a>
     </li>
-    <li ng-if="$pager.showPrev" ng-click="$pager.prev()" ng-class="{'disabled': $pager.currentPage == 1}">
+    <li ng-if="$pager.showPrev" ng-class="{'disabled': $pager.currentPage == 1}">
         <a href="javascript:void(0);"  ng-click="$pager.prev()" ng-disabled="$pager.currentPage == 1"
            ng-class="{'disabled': $pager.currentPage == 1}">
             {{ $pager.prevLabel }}
         </a>
     </li>
-    <li ng-if="$pager.currentPage > $pager.numberLimit"
-        ng-click="$pager.page(Math.max(1, $pager.currentPage - $pager.numberLimit))">
-        <a href="javascript:void(0);" ng-click="$pager.page(Math.max(1, $pager.currentPage - $pager.numberLimit))">
+    <li ng-if="$pager.currentPage > $pager.numberLimit">
+        <a href="javascript:void(0);" ng-click="$pager.skipBack();">
             &hellip;
         </a>
     </li>
-    <li ng-repeat="number in $pager.numbers" ng-click="$pager.page(number)"
-        ng-class="{'active': $pager.currentPage == number}">
+    <li ng-repeat="number in $pager.numbers" ng-class="{'active': $pager.currentPage == number}">
         <a href="javascript:void(0);" ng-click="$pager.page(number)" ng-class="{'active': $pager.currentPage == number}">
             {{ number }}
         </a>
     </li>
-    <li ng-if="$pager.currentPage <= $pager.maxPages - $pager.numberLimit"
-        ng-click="$pager.page(Math.min($pager.maxPages, $pager.currentPage + $pager.numberLimit))">
+    <li ng-if="$pager.currentPage <= $pager.maxPages - $pager.numberLimit">
         <a href="javascript:void(0);"
-           ng-click="$pager.page(Math.min($pager.maxPages, $pager.currentPage + $pager.numberLimit))">
+           ng-click="$pager.skipForward();">
             &hellip;
         </a>
     </li>
-    <li ng-if="$pager.showNext" ng-click="$pager.next()" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
+    <li ng-if="$pager.showNext" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
         <a href="javascript:void(0);"
            ng-click="$pager.next()" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
             {{ $pager.nextLabel }}
         </a>
     </li>
-    <li ng-if="$pager.showLast" ng-click="$pager.last()" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
+    <li ng-if="$pager.showLast" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
         <a href="javascript:void(0);"
            ng-click="$pager.last()" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
             {{ $pager.lastLabel }}

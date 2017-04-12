@@ -126,31 +126,37 @@ export class DatafreePagerDirectiveController implements IController {
     }
 
     page(p: number): IPromise<any> {
-        return this.datafree.page(0);
+        return this.datafree.page(p - 1);
+    }
+
+    skipBack(): IPromise<any> {
+        return this.page(Math.max(1, this.currentPage - this.numberLimit));
+    }
+
+    skipForward(): IPromise<any> {
+        return this.page(Math.min(this.maxPages, this.currentPage + this.numberLimit));
     }
 
     $onInit() {
-        this.dataChange = (() => {
-            return (() => {
-                this.currentPage = this.datafree.client.$query.$page + 1; // query.$page starts at 0, pager starts at 1
-                this.limit = this.datafree.client.$query.$limit;
-                this.total = this.datafree.client.$query.$total;
-                this.maxPages = Math.ceil(this.total / this.limit);
+        this.dataChange = (function() {
+            this.currentPage = this.datafree.client.$query.$page + 1; // query.$page starts at 0, pager starts at 1
+            this.limit = this.datafree.client.$query.$limit;
+            this.total = this.datafree.client.$query.$total;
+            this.maxPages = Math.ceil(this.total / this.limit);
 
-                let median = Math.floor(this.numberLimit / 2);
+            let median = Math.floor(this.numberLimit / 2);
 
-                this.numbers = [];
+            this.numbers = [];
 
-                if (median > 0) {
-                    let start = Math.max(1, Math.min(this.maxPages - this.numberLimit + 1, this.currentPage - median));
-                    let max = Math.min(start + this.numberLimit, this.maxPages + 1);
+            if (median > 0) {
+                let start = Math.max(1, Math.min(this.maxPages - this.numberLimit + 1, this.currentPage - median));
+                let max = Math.min(start + this.numberLimit, this.maxPages + 1);
 
-                    for (let i = start; i < max; i++) {
-                        this.numbers.push(i);
-                    }
+                for (let i = start; i < max; i++) {
+                    this.numbers.push(i);
                 }
-            }).bind(this);
-        })();
+            }
+        }).bind(this);
     }
 
     $postLink() {
