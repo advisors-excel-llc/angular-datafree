@@ -1,7 +1,7 @@
 {
   "name": "angular-datafree",
   "version": "1.0.0",
-  "description": "Render api data on the frontend feely",
+  "description": "Render api data on the frontend freely",
   "main": "src/angular-datafree.build.min.js",
   "scripts": {
     "test": "karma start",
