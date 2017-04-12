@@ -3,7 +3,7 @@
  */
 import {
     IAttributes, IDirective, IScope, ITranscludeFunction, isArray, isUndefined, isObject,
-    IDirectiveLinkFn, IController, element
+    IDirectiveLinkFn, IController, element, forEach
 } from "angular";
 import {DatafreeDirectiveController, DatafreePagerDirectiveController} from "./controller";
 import {DFOrderDirection} from "./query";
@@ -150,15 +150,14 @@ export class DatafreeOrder implements IDirective {
     };
     link:IDirectiveLinkFn = (scope:IScope, e: JQuery, attrs: IAttributes, $df: DatafreeDirectiveController) => {
         scope.direction = null;
+        e.addClass('orderable');
 
-        let checkSort:Function = () => {
-            let column = $df.client.$query.$orderBy;
-            let direction = $df.client.$query.$orderDirection;
+        let checkSort:Function = function() {
+            let column = this.client.$query.$orderBy;
+            let direction = this.client.$query.$orderDirection;
 
-            e.addClass('sortable');
-
-            if (scope.column === column) {
-                e.addClass(direction === DFOrderDirection.DESC ? 'sort-down' : 'sort-up');
+            if (scope.column == column) {
+                e.addClass(direction == DFOrderDirection.DESC ? 'order-desc' : 'order-asc');
                 scope.direction = direction;
             }
         };
@@ -170,15 +169,15 @@ export class DatafreeOrder implements IDirective {
         });
 
         e.on('click', function() {
-            e.parent().children().forEach(function(e) {
+            forEach(e.parent().children(), function(e) {
                 let $e = element(e);
-                $e.removeClass('sort-up').removeClass('sort-down');
+                $e.removeClass('order-asc').removeClass('order-desc');
             });
 
             let direction = scope.direction;
 
-            if (scope.column === $df.client.$query.$orderBy || direction === null) {
-                direction = direction === DFOrderDirection.ASC ? 'DESC' : 'ASC';
+            if (scope.column == $df.client.$query.$orderBy || direction == null) {
+                direction = direction == DFOrderDirection.ASC ? 'DESC' : 'ASC';
             }
 
             $df.order(scope.column, direction);

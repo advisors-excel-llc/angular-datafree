@@ -156,7 +156,7 @@ export class DFClient extends Subscribeable {
         return this.page(0);
     }
 
-    order(column:string, direction: DFOrderDirection): IPromise<any> {
+    order(column:string, direction: "ASC" | "DESC"): IPromise<any> {
         this.query.$orderBy = column;
         this.query.$orderDirection = direction;
 

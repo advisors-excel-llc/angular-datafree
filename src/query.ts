@@ -71,12 +71,20 @@ export default class DFQuery {
         ];
     }
 
-    set $orderBy(column: string) {
+    set $orderBy(column: string | Function) {
         this.settings.orderBy = column;
     }
 
-    set $orderDirection(direction: DFOrderDirection) {
+    get $orderBy(): string | Function {
+        return this.settings.orderBy instanceof Function ? this.settings.orderBy() : this.settings.orderBy;
+    }
+
+    set $orderDirection(direction: "ASC" | "DESC") {
         this.settings.orderDirection = direction;
+    }
+
+    get $orderDirection(): "ASC" | "DESC" {
+        return this.settings.orderDirection;
     }
 
     get $filter(): string {
@@ -129,7 +137,7 @@ export interface IDFQuerySettings {
     page: number;
     limit: number;
     orderBy?: string|Function;
-    orderDirection?: DFOrderDirection;
+    orderDirection?: "ASC" | "DESC";
     filter?: string|Function;
 }
 
@@ -150,8 +158,8 @@ export class DFDefaultParamsMap implements IDFParamsMap{
 }
 
 export class DFOrderDirection {
-    static ASC = 'ASC';
-    static DESC = 'DESC';
+    static ASC:"ASC" = 'ASC';
+    static DESC:"DESC" = 'DESC';
 }
 
 export class DFDataResponseType {

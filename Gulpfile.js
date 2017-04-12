@@ -8,6 +8,7 @@ var browserify = require('browserify');
 var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var templateCache = require('gulp-angular-templatecache');
+var less = require('gulp-less');
 
 gulp.task('webpack', function() {
     return gulp.src('src/angular-datafree.ts')
@@ -24,6 +25,19 @@ gulp.task('browserify', ['webpack'], function() {
         ;
 });
 
+gulp.task('less', function() {
+    gulp.src('less/angular-datafree.less')
+        .pipe(less({
+            paths: ['less/**/*.less'],
+            compress: true
+        }))
+        .pipe(rename({
+            extname: '.min.css'
+        }))
+        .pipe(gulp.dest('dist/'))
+    ;
+});
+
 gulp.task('ng-template', function() {
     return gulp.src('views/**/*.html')
         .pipe(templateCache({
@@ -35,4 +49,4 @@ gulp.task('ng-template', function() {
     ;
 });
 
-gulp.task('default', ['browserify', 'ng-template']);
+gulp.task('default', ['browserify', 'less', 'ng-template']);

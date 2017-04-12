@@ -52,7 +52,11 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
         return this.client.last();
     }
 
-    order(column: string, direction: DFOrderDirection): IPromise<any> {
+    page(p: number): IPromise<any> {
+        return this.client.page(p);
+    }
+
+    order(column: string, direction: "ASC" | "DESC"): IPromise<any> {
         return this.client.order(column, direction);
     }
 
@@ -68,7 +72,7 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
         if (null != this.query && null == this.client) {
             this.client = this.clientFactory.createClient(this.query);
         } else if (null == this.query && null == this.client) {
-            throw new Error("Either a DBQuery or a DBClient object must be provided to Datafree.");
+            throw new Error("Either a DFQuery or a DFClient object must be provided to Datafree.");
         }
 
         this.client.subscribe(this.dataListener);
@@ -104,6 +108,26 @@ export class DatafreePagerDirectiveController implements IController {
     protected total:number = 0;
 
     private dataChange:Function;
+
+    prev(): IPromise<any> {
+        return this.datafree.prev();
+    }
+
+    next(): IPromise<any> {
+        return this.datafree.next();
+    }
+
+    first(): IPromise<any> {
+        return this.datafree.first();
+    }
+
+    last(): IPromise<any> {
+        return this.datafree.last();
+    }
+
+    page(p: number): IPromise<any> {
+        return this.datafree.page(0);
+    }
 
     $onInit() {
         this.dataChange = (() => {

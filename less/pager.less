@@ -1,0 +1,25 @@
+datafree {
+  ul.datafree-pager {
+    display: block;
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin: 5px;
+      display: inline-block;
+
+      a {
+        display: block;
+        padding: 5px;
+        text-decoration: none;
+
+        &[disabled] {
+          color: #7f7f7f;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+datafree {
+  table > thead > tr > th.orderable {
+    cursor: pointer;
+    padding-right: 2em;
+    position: relative;
+
+    &.order-asc:after, &.order-desc:after {
+      display: table-cell;
+      vertical-align: middle;
+      width: 2em;
+      content: '\25B2';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    &.order-desc:after {
+      content: '\25BC';
+    }
+  }
+}
