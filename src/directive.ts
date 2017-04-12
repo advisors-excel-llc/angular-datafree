@@ -19,7 +19,7 @@ export class DatafreeDirective implements IDirective {
         client: '=?',
         autoload: '=?'
     };
-    controller = DatafreeDirectiveController;
+    controller = ['DFClientFactory', DatafreeDirectiveController];
 }
 
 export class DatafreeRow implements IDirective {

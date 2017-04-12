@@ -85,8 +85,6 @@ export class DatafreeDirectiveController extends Subscribeable implements IContr
     }
 }
 
-DatafreeDirectiveController.$inject = ['DFClientFactory'];
-
 export class DatafreePagerDirectiveController implements IController {
     public datafree:DatafreeDirectiveController;
     public numberLimit: number = 5;

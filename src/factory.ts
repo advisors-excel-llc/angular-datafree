@@ -14,9 +14,6 @@ export class DFClientFactory {
     }
 }
 
-DFClientFactory.$inject = ['$http', '$q'];
-
-
 export class DFClient extends Subscribeable {
     private headers: Object;
     private withCredentials:boolean = false;

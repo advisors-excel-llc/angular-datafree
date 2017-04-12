@@ -5,9 +5,9 @@ import {IHttpService, IQService} from "angular";
 
 export module AngularDatafree {
     angular.module('ae.datafree', ['ng'])
-        .factory('DFClientFactory', ($http: IHttpService, $q: IQService) => {
+        .factory('DFClientFactory', ['$http', '$q', ($http: IHttpService, $q: IQService) => {
             return new DFClientFactory($http, $q);
-        })
+        }])
         .directive('datafree', () => {
             return new DatafreeDirective();
         })
