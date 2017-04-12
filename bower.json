@@ -1,0 +1,24 @@
+{
+  "name": "angular-datafree",
+  "description": "Render api data on the frontend feely",
+  "main": "src/angular-datafree.min.js",
+  "authors": [
+    "Alex Boyce <curiosity26@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "data",
+    "datafree",
+    "api",
+    "visualization"
+  ],
+  "homepage": "https://github.com/advisors-excel-llc/angular-datafree",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
