@@ -109,32 +109,41 @@ export class DatafreePagerDirectiveController implements IController {
 
     private dataChange:Function;
 
-    prev(): IPromise<any> {
-        return this.datafree.prev();
+    prev() {
+        if (this.currentPage > 1) {
+            this.datafree.prev();
+        }
     }
 
-    next(): IPromise<any> {
-        return this.datafree.next();
+    next() {
+        if (this.currentPage < this.maxPages) {
+            this.datafree.next();
+        }
     }
 
-    first(): IPromise<any> {
-        return this.datafree.first();
+    first() {
+        this.datafree.first();
     }
 
-    last(): IPromise<any> {
-        return this.datafree.last();
+    last() {
+        this.datafree.last();
     }
 
-    page(p: number): IPromise<any> {
-        return this.datafree.page(p - 1);
+    page(p: number) {
+        let page:number = p - 1;
+
+        if (page >= 0 && page < this.maxPages)
+        {
+            this.datafree.page(page);
+        }
     }
 
-    skipBack(): IPromise<any> {
-        return this.page(Math.max(1, this.currentPage - this.numberLimit));
+    skipBack() {
+        this.page(Math.max(1, this.currentPage - this.numberLimit));
     }
 
-    skipForward(): IPromise<any> {
-        return this.page(Math.min(this.maxPages, this.currentPage + this.numberLimit));
+    skipForward() {
+        this.page(Math.min(this.maxPages, this.currentPage + this.numberLimit));
     }
 
     $onInit() {
