@@ -39,7 +39,7 @@
     <li ng-if="$pager.showLast" ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
         <a href="javascript:void(0);" ng-click="$pager.currentPage < $pager.maxPages && $pager.last()"
            ng-disabled="$pager.currentPage == $pager.maxPages"
-           ng-class="{'disabled': $pager.currentPage == $pager.maxPages - 1}">
+           ng-class="{'disabled': $pager.currentPage == $pager.maxPages}">
             {{ $pager.lastLabel }}
         </a>
     </li>
