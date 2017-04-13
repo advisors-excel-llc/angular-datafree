@@ -87,13 +87,7 @@ export class DFClient extends Subscribeable {
     send(params?: Object): IPromise<any> {
         let defer: IDeferred<any> = this.$q.defer();
 
-        this.sendRequest({
-            url: this.query.$url,
-            params: this.buildQueryParams(params),
-            method: this.query.$method,
-            withCredentials: this.withCredentials,
-            headers: this.headers,
-        }).then((response) => {
+        this.sendRequest(params).then((response) => {
             let data = this.handleResponse(response);
             defer.resolve(data);
             this.dispatch(data);
