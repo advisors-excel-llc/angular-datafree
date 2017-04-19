@@ -1,4 +1,5 @@
-# Angular Datafree
+# Angular Datafree 
+[![Build Status](https://travis-ci.org/advisors-excel-llc/angular-datafree.svg?branch=master)](https://travis-ci.org/advisors-excel-llc/angular-datafree)
 
 Freely visualize backend data within an Angular Frontend.
 
@@ -142,7 +143,7 @@ An `IDFParamsMap` object simply associates the properties on the `IFQuerySetting
 | orderDirection | order_direction |
 | filter | q |
 
-*Example: `IDFQuerySettings` values, this `IDFParamsMap` would be converted to `&page=[$page]&limit=[$limit]&order_by=[$orderBy]&order_direction=[$orderDirection]&q=[$filter]`*
+*Example: Using `IDFQuerySettings` values, this `IDFParamsMap` would be converted to `&page=[$page]&limit=[$limit]&order_by=[$orderBy]&order_direction=[$orderDirection]&q=[$filter]`*
 
 ## DFClient
 
