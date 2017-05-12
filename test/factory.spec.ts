@@ -2,8 +2,7 @@
  * Created by alex.boyce on 4/7/17.
  */
 
-import chai = require('chai');
-import expect = chai.expect;
+import {expect} from "chai";
 import * as angular from 'angular';
 import {MockDataset, IMockData} from './mock-data';
 import "angular-mocks";

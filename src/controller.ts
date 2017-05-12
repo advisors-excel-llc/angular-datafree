@@ -2,12 +2,12 @@
  * Created by alex.boyce on 4/5/17.
  */
 
-import {IController, IPromise} from "angular";
-import DFQuery, {DFOrderDirection} from "./query";
+import {IController,IPromise} from "angular";
+import DFQuery from "./query";
 import {DFClientFactory,DFClient} from "./factory";
 import {Subscribeable} from "./utilities";
 
-export class DatafreeDirectiveController extends Subscribeable implements IController {
+export class DatafreeDirectiveController extends Subscribeable implements IController{
     public query:DFQuery;
     public client:DFClient;
     public autoload:boolean = true;

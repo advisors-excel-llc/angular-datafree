@@ -1,9 +1,10 @@
 /**
  * Created by alex.boyce on 4/4/17.
  */
-import DFQuery, {DFDataResponseType, DFOrderDirection} from "./query";
+import DFQuery, {DFDataResponseType} from "./query";
 import {Subscribeable} from "./utilities";
-import {IHttpService, IHttpPromiseCallbackArg, extend, IQService, IPromise, IDeferred} from "angular";
+import {IHttpService, IHttpPromiseCallbackArg, IQService, IPromise, IDeferred} from "angular";
+import {extend} from "angular";
 
 export class DFClientFactory {
 

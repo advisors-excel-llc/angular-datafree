@@ -1,13 +1,11 @@
-import chai = require('chai');
-import expect = chai.expect;
+import {expect} from "chai";
 import * as angular from 'angular';
 import {MockDataset, IMockData} from './mock-data';
 import "angular-mocks";
-import IHttpBackendService = angular.IHttpBackendService;
 import IInjectorService = angular.auto.IInjectorService;
 import DFQuery, {DFOrderDirection} from "../src/query";
 import "../src/angular-datafree";
-import {IRootScopeService, IScope, ITemplateCacheService} from "angular";
+import {IRootScopeService, IScope, ITemplateCacheService, IHttpBackendService} from "angular";
 import {DFClient, DFClientFactory} from "../src/factory";
 
 describe('Datafree Directive', function() {

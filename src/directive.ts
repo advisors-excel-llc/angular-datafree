@@ -1,10 +1,8 @@
 /**
  * Created by alex.boyce on 4/5/17.
  */
-import {
-    IAttributes, IDirective, IScope, ITranscludeFunction, isArray, isUndefined, isObject,
-    IDirectiveLinkFn, IController, element, forEach
-} from "angular";
+import {IAttributes, IDirective, IScope, ITranscludeFunction, isArray, isObject, element, forEach,
+    IDirectiveLinkFn, IController} from "angular";
 import {DatafreeDirectiveController, DatafreePagerDirectiveController} from "./controller";
 import {DFOrderDirection} from "./query";
 
