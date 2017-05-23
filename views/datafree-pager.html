@@ -1,13 +1,13 @@
 <ul class="datafree-pager">
     <li ng-if="$pager.showFirst" ng-class="{'disabled': $pager.currentPage == 1}">
-        <a href="javascript:void(0);" ng-click="$pager.currentPage > $pager.maxPages && $pager.first()"
+        <a href="javascript:void(0);" ng-click="$pager.currentPage > 1 && $pager.first()"
            ng-disabled="$pager.currentPage == 1"
            ng-class="{'disabled': $pager.currentPage == 1}">
             {{ $pager.firstLabel }}
         </a>
     </li>
     <li ng-if="$pager.showPrev" ng-class="{'disabled': $pager.currentPage == 1}">
-        <a href="javascript:void(0);"  ng-click="$pager.currentPage > $pager.maxPages && $pager.prev()"
+        <a href="javascript:void(0);"  ng-click="$pager.currentPage > 1 && $pager.prev()"
            ng-disabled="$pager.currentPage == 1" ng-class="{'disabled': $pager.currentPage == 1}">
             {{ $pager.prevLabel }}
         </a>
