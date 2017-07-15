@@ -1,8 +1,8 @@
 {
   "name": "angular-datafree",
-  "version": "1.0.0",
+  "version": "1.0.9",
   "description": "Render api data on the frontend freely",
-  "main": "dist/angular-datafree.build.min.js",
+  "main": "dist/angular-datafree.min.js",
   "scripts": {
     "test": "karma start",
     "build": "gulp"
