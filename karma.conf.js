@@ -1,6 +1,9 @@
 // Karma configuration
 // Generated on Fri Apr 07 2017 11:33:41 GMT-0400 (EDT)
 
+// Fix for karma tests on travis ci
+process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
+
 module.exports = function(config) {
   config.set({
 
