@@ -1,7 +1,7 @@
 /**
  * Created by alex.boyce on 4/5/17.
  */
-import {IAttributes, IDirective, IScope, ITranscludeFunction, isArray, isObject, element, forEach,
+import {IAttributes, IDirective, IScope, ITranscludeFunction, isArray, isObject, element as $element, forEach,
     IDirectiveLinkFn, IController} from "angular";
 import {DatafreeDirectiveController, DatafreePagerDirectiveController} from "./controller";
 import {DFOrderDirection} from "./query";
@@ -168,7 +168,7 @@ export class DatafreeOrder implements IDirective {
 
         e.on('click', function() {
             forEach(e.parent().children(), function(e) {
-                let $e = element(e);
+                let $e = $element(e);
                 $e.removeClass('order-asc').removeClass('order-desc');
             });
 

@@ -2,17 +2,14 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "ES5",
-    "module": "commonjs",
-    "moduleResolution": "node",
     "sourceMap": true,
     "lib": ["dom", "es2015.promise", "es5", "es6"],
     "types" : [
       "angular",
       "angular-mocks",
-      "mocha"
+      "mocha",
+      "chai",
+      "chai-as-promised"
     ]
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }

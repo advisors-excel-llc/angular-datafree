@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ES5",
+    "target": "es5",
     "allowJs": true,
     "rootDir": "src",
-    "moduleResolution": "node",
     "sourceMap": true,
     "lib": ["dom", "es2015.promise", "es5"],
     "types" : [
-      "angular"
+      "angular",
+      "angular-mocks",
+      "chai",
+      "chai-as-promised"
     ]
   },
   "include": [
     "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }

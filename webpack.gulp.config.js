@@ -19,9 +19,16 @@ module.exports = {
         libraryTarget: 'var'
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['', '.ts', '.tsx', '.js']
     },
     module: {
+        loaders: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            }
+        ],
         rules: [
             {
                 test: /\.tsx?$/,

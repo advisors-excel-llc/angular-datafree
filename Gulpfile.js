@@ -3,26 +3,16 @@
  */
 
 var gulp = require('gulp');
-var webpack = require('gulp-webpack');
-var browserify = require('browserify');
+var webpack = require('webpack-stream');
 var rename = require('gulp-rename');
-var source = require('vinyl-source-stream');
 var templateCache = require('gulp-angular-templatecache');
 var less = require('gulp-less');
 
 gulp.task('webpack', function() {
     return gulp.src('src/angular-datafree.ts')
-        .pipe(webpack(require('./webpack.config.js')))
+        .pipe(webpack(require('./webpack.gulp.config.js')))
         .pipe(gulp.dest('dist/'))
     ;
-});
-
-gulp.task('browserify', ['webpack'], function() {
-    return browserify('dist/angular-datafree.build.min.js')
-        .bundle()
-        .pipe(source('angular-datafree.min.js'))
-        .pipe(gulp.dest('dist/'))
-        ;
 });
 
 gulp.task('less', function() {
@@ -49,4 +39,4 @@ gulp.task('ng-template', function() {
     ;
 });
 
-gulp.task('default', ['browserify', 'less', 'ng-template']);
+gulp.task('default', ['webpack', 'less', 'ng-template']);

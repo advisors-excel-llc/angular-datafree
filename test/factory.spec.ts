@@ -6,12 +6,11 @@ import {expect} from "chai";
 import * as angular from 'angular';
 import {MockDataset, IMockData} from './mock-data';
 import "angular-mocks";
-import {DFClient, DFClientFactory} from "../src/factory";
-import IHttpBackendService = angular.IHttpBackendService;
-import IInjectorService = angular.auto.IInjectorService;
+import {DFClientFactory} from "../src/factory";
+import DFClient from "../src/client";
 import DFQuery, {DFDataResponseType, DFOrderDirection} from "../src/query";
 import "../src/angular-datafree";
-import {IHttpService, IPromise} from "angular";
+import {IHttpBackendService, IHttpService, IPromise} from "angular";
 
 describe('Datafree Client Body', () => {
     let client:DFClient;
@@ -21,7 +20,7 @@ describe('Datafree Client Body', () => {
 
     beforeEach(angular.mock.module('ae.datafree'));
 
-    beforeEach(inject(($injector) => {
+    beforeEach(angular.mock.inject(($injector) => {
         $http = $injector.get('$http');
         $httpBackend = $injector.get('$httpBackend');
         dfFactory = $injector.get('DFClientFactory');
@@ -315,7 +314,7 @@ describe('Datafree Client Property', () => {
 
     beforeEach(angular.mock.module('ae.datafree'));
 
-    beforeEach(inject(($injector) => {
+    beforeEach(angular.mock.inject(($injector) => {
         $http = $injector.get('$http');
         $httpBackend = $injector.get('$httpBackend');
         dfFactory = $injector.get('DFClientFactory');

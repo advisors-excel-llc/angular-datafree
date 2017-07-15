@@ -5,8 +5,8 @@ Freely visualize backend data within an Angular Frontend.
 
 ### Files
 
-* `dist/angular-datafree.build.min.js` - the WebPack'd distribution targeting CommonJS
-* `dist/angular-datafree.min.js` - the Browserified version for out of the box use
+* <strike>`dist/angular-datafree.build.min.js`</strike> - No longer used
+* `dist/angular-datafree.min.js` - the version for production use
 * `dist/angular-datafree-templates.js` - include this file and module in your app to use the default template files
 * `dist/angular-datafree.min.css` - the default CSS for the templates
 

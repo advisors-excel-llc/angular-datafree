@@ -2,11 +2,11 @@ import {expect} from "chai";
 import * as angular from 'angular';
 import {MockDataset, IMockData} from './mock-data';
 import "angular-mocks";
-import IInjectorService = angular.auto.IInjectorService;
 import DFQuery, {DFOrderDirection} from "../src/query";
 import "../src/angular-datafree";
 import {IRootScopeService, IScope, ITemplateCacheService, IHttpBackendService} from "angular";
-import {DFClient, DFClientFactory} from "../src/factory";
+import DFClientFactory from "../src/factory";
+import DFClient from "../src/client";
 
 describe('Datafree Directive', function() {
     let scope:IScope;
@@ -16,7 +16,7 @@ describe('Datafree Directive', function() {
 
     beforeEach(angular.mock.module('ae.datafree'));
 
-    beforeEach(inject(function ($injector) {
+    beforeEach(angular.mock.inject(function ($injector) {
         let $rootScope:IRootScopeService = $injector.get('$rootScope');
         let $templateCache:ITemplateCacheService = $injector.get('$templateCache');
 
@@ -105,7 +105,7 @@ describe('Datafree Directive', function() {
     }));
 
     let compileDirecive:Function = (template:string) => {
-        inject(function($compile) {
+        angular.mock.inject(function($compile) {
             dfElement = $compile(template)(scope);
             dfPager = dfElement.find('datafree-pager');
         });
@@ -189,7 +189,7 @@ describe('Datafree Directive', function() {
 
         $httpBackend.expectGET(/query/);
 
-        inject(function(DFClientFactory:DFClientFactory) {
+        angular.mock.inject(function(DFClientFactory) {
             let query = new DFQuery('/query');
             let cb:Function = () => {
                 // After listener is triggered, give it a half a second for the results to digest into the scope
@@ -246,7 +246,7 @@ describe('Datafree Directive', function() {
 
         $httpBackend.expectGET(/query/);
 
-        inject(function(DFClientFactory:DFClientFactory) {
+        angular.mock.inject(function(DFClientFactory) {
             let query = new DFQuery('/query');
             let doneFlag:boolean = false;
             let cb:Function = () => {
@@ -373,7 +373,7 @@ describe('Datafree Directive', function() {
 
         $httpBackend.expectGET(/query/);
 
-        inject(function(DFClientFactory:DFClientFactory) {
+        angular.mock.inject(function(DFClientFactory) {
             let query = new DFQuery('/query');
             let filtered:boolean = false;
             let cb:Function = () => {
@@ -439,7 +439,7 @@ describe('Datafree Directive', function() {
 
         $httpBackend.expectGET(/query/);
 
-        inject(function(DFClientFactory:DFClientFactory) {
+        angular.mock.inject(function(DFClientFactory) {
             let query = new DFQuery('/query');
             let ordered:boolean = false;
             let tr:JQuery;
