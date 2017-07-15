@@ -1,8 +1,8 @@
 import {expect} from "chai";
 import * as angular from "angular";
 import "angular-mocks";
-import {default as DFQuery, DFDefaultParamsMap, DFOrderDirection} from "../src/query";
-import {DFClientFactory} from "../src/factory";
+import DFQuery, {DFDefaultParamsMap, DFOrderDirection} from "../src/query";
+import DFClientFactory from "../src/factory";
 import DFClient from "../src/client";
 
 describe('DFClient', function() {

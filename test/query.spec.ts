@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {default as DFQuery, DFDefaultParamsMap, DFOrderDirection} from "../src/query";
+import DFQuery, {DFDefaultParamsMap, DFOrderDirection} from "../src/query";
 
 describe('DFQuery', function() {
     it('should build a valid query', function() {

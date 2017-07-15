@@ -6,7 +6,7 @@ import {expect} from "chai";
 import * as angular from 'angular';
 import {MockDataset, IMockData} from './mock-data';
 import "angular-mocks";
-import {DFClientFactory} from "../src/factory";
+import DFClientFactory from "../src/factory";
 import DFClient from "../src/client";
 import DFQuery, {DFDataResponseType, DFOrderDirection} from "../src/query";
 import "../src/angular-datafree";

@@ -5,7 +5,7 @@ import DFQuery from "./query";
 import DFClient from "./client";
 import {IHttpService, IQService} from "angular";
 
-export class DFClientFactory {
+export default class DFClientFactory {
 
     constructor(private $http: IHttpService, private $q:IQService) { }
 

@@ -1,5 +1,5 @@
 import * as angular from "angular";
-import {DFClientFactory} from "./factory";
+import DFClientFactory from "./factory";
 import {DatafreeDirective, DatafreeEmpty, DatafreeOrder, DatafreePager, DatafreeRow} from "./directive";
 import {IHttpService, IQService} from "angular";
 import DFQuery, {DFDataResponseType, DFOrderDirection} from "./query";

@@ -5,7 +5,6 @@ import "angular-mocks";
 import DFQuery, {DFOrderDirection} from "../src/query";
 import "../src/angular-datafree";
 import {IRootScopeService, IScope, ITemplateCacheService, IHttpBackendService} from "angular";
-import DFClientFactory from "../src/factory";
 import DFClient from "../src/client";
 
 describe('Datafree Directive', function() {

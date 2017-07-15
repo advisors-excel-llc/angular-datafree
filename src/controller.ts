@@ -4,7 +4,7 @@
 
 import {IController,IPromise} from "angular";
 import DFQuery from "./query";
-import {DFClientFactory} from "./factory";
+import DFClientFactory from "./factory";
 import DFClient from "./client";
 import {Subscribeable} from "./utilities";
 
