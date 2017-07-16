@@ -17,6 +17,9 @@ export default class DFQuery {
         },
         filterCallback: (filter) => {
             return filter;
+        },
+        pageCallback: (page) => {
+            return page;
         }
     };
 
@@ -58,7 +61,7 @@ export default class DFQuery {
     }
 
     get $page(): number {
-        return this.settings.page;
+        return this.settings.pageCallback.call(this, this.settings.page, this.settings.limit);
     }
 
     set $page(p: number) {
@@ -147,6 +150,7 @@ export interface IDFQuerySettings {
     filter?: string;
     orderCallback?: Function;
     filterCallback?: Function;
+    pageCallback?: Function;
 }
 
 export interface IDFParamsMap {

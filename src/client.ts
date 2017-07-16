@@ -31,8 +31,7 @@ export default class DFClient extends Subscribeable {
         let p: Object = extend({}, this.query.$settings, params);
 
         // Process OrderBy and/or OrderDirection
-        if (this.query.$settings.hasOwnProperty('orderCallback')
-            && this.query.$paramsMap.hasOwnProperty('orderBy')) {
+        if (this.query.$paramsMap.hasOwnProperty('orderBy')) {
             let order:Array<string | DFOrderDirection> = this.query.$order;
             o[this.query.$paramsMap['orderBy']] = order[0];
 
@@ -42,14 +41,18 @@ export default class DFClient extends Subscribeable {
         }
 
         // Process the Filter value
-        if (this.query.$settings.hasOwnProperty('filterCallback')
-            && this.query.$paramsMap.hasOwnProperty('filter')) {
+        if (this.query.$paramsMap.hasOwnProperty('filter')) {
             o[this.query.$paramsMap['filter']] = this.query.$filter;
+        }
+
+        // Process the Page value
+        if (this.query.$paramsMap.hasOwnProperty('page')) {
+            o[this.query.$paramsMap['page']] = this.query.$page;
         }
 
         for (let k in p) {
             // Skip functions or properties already set
-            if (p[k] instanceof Function || k == 'orderBy' || k =='orderDirection' || k == 'filter') {
+            if (p[k] instanceof Function || k == 'orderBy' || k =='orderDirection' || k == 'filter' || k == 'page') {
                 continue;
             }
 

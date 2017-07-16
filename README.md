@@ -128,8 +128,9 @@ These are the default values which are mapped to the request's query parameters 
 | orderBy | string | null |
 | orderDirection | "ASC" or "DESC" | null |
 | filter | string | null |
-| orderCallback | function | a function that returns an array of [ `orderBy`, `orderDirection` ] |
-| filterCallback | function | a default getter function for the filter value |
+| orderCallback | function(orderBy, orderDirection) | a function that returns an array of [ `orderBy`, `orderDirection` ] |
+| filterCallback | function(filter) | a default getter function for the filter value |
+| pageCallback | function(page, limit) | returns the `page` value, by default. Use this to do something like `page * limit`. |
 
 *When a value is a function, it is executed at the moment the client builds the parameters to send to the server. When a value is `null` it is not output to the query parameters.*
 
