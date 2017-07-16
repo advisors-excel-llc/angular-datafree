@@ -16,7 +16,8 @@ describe('DFClient', function() {
         page: 0,
         limit: 10,
         orderBy: 'testA',
-        orderDirection: DFOrderDirection.ASC
+        orderDirection: DFOrderDirection.ASC,
+        filter: 'testing'
     }, map);
 
     beforeEach(angular.mock.module('ae.datafree'));
@@ -33,13 +34,8 @@ describe('DFClient', function() {
         expect(params.stop).to.be.eq(10);
         expect(params.order_by).to.be.eq('testA');
         expect(params.order_direction).to.be.eq(DFOrderDirection.ASC);
+        expect(params.q).to.be.eq('testing');
         expect(params.url).to.be.undefined;
         expect(params.method).to.be.undefined;
-        expect(params).to.be.deep.eq({
-            start: 0,
-            stop: 10,
-            order_by: 'testA',
-            order_direction: DFOrderDirection.ASC
-        });
     });
 });

@@ -1,6 +1,6 @@
 {
   "name": "angular-datafree",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Render api data on the frontend freely",
   "main": "dist/angular-datafree.min.js",
   "scripts": {
@@ -44,11 +44,13 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-typescript": "^3.0.4",
     "mocha": "^3.2.0",
-    "phantomjs": "^2.1.7",
     "ts-loader": "^2.2.2",
     "tslint": "^5.0.0",
     "typescript": "^2.4.1",
     "webpack": "^3.2.0",
     "webpack-stream": "^3.2.0"
+  },
+  "dependencies": {
+    "phantomjs-prebuilt": "^2.1.14"
   }
 }

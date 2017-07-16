@@ -125,9 +125,11 @@ These are the default values which are mapped to the request's query parameters 
 | --- | ---- | ---- |
 | page | number | 0 |
 | limit | number | 10 |
-| orderBy | string or Function | null |
+| orderBy | string | null |
 | orderDirection | "ASC" or "DESC" | null |
-| filter | string or Function | null |
+| filter | string | null |
+| orderCallback | function | a function that returns an array of [ `orderBy`, `orderDirection` ] |
+| filterCallback | function | a default getter function for the filter value |
 
 *When a value is a function, it is executed at the moment the client builds the parameters to send to the server. When a value is `null` it is not output to the query parameters.*
 

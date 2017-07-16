@@ -11,12 +11,14 @@ describe('DFQuery', function() {
             page: 0,
             limit: 10,
             orderBy: 'testA',
-            orderDirection: DFOrderDirection.ASC
+            orderDirection: DFOrderDirection.ASC,
+            filter: 'testing'
         }, map);
 
         expect(query.$page).to.be.eq(0);
         expect(query.$limit).to.be.eq(10);
         expect(query.$orderBy).to.be.eq('testA');
         expect(query.$orderDirection).to.be.eq(DFOrderDirection.ASC);
+        expect(query.$filter).to.be.eq('testing');
     });
 });

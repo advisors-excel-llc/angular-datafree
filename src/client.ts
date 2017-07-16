@@ -1,4 +1,4 @@
-import DFQuery, {DFDataResponseType, IDFQuerySettings} from "./query";
+import DFQuery, {DFDataResponseType, DFOrderDirection, IDFQuerySettings} from "./query";
 import {Subscribeable} from "./utilities";
 import {IHttpService, IHttpPromiseCallbackArg, IQService, IPromise, IDeferred, extend} from "angular";
 
@@ -31,7 +31,11 @@ export default class DFClient extends Subscribeable {
         let p: Object = extend({}, this.query.$settings, params);
 
         for (let k in p) {
-            let v = p[k] instanceof Function ? p[k](p) : p[k];
+            if (p[k] instanceof Function) {
+                continue;
+            }
+
+            let v = p[k];
 
             if (this.query.$paramsMap.hasOwnProperty(k)) {
                 o[this.query.$paramsMap[k]] = v;
@@ -39,6 +43,22 @@ export default class DFClient extends Subscribeable {
                 o[k] = v;
             }
         }
+
+        if (this.query.$settings.hasOwnProperty('orderCallback')
+            && this.query.$paramsMap.hasOwnProperty('orderBy')) {
+            let order:Array<string | DFOrderDirection> = this.query.$order;
+            o[this.query.$paramsMap['orderBy']] = order[0];
+
+            if (order.length > 1) {
+                o[this.query.$paramsMap['orderDirection']] = order[1];
+            }
+        }
+
+        if (this.query.$settings.hasOwnProperty('filterCallback')
+            && this.query.$paramsMap.hasOwnProperty('filter')) {
+            o[this.query.$paramsMap['filter']] = this.query.$filter;
+        }
+
 
         return o;
     }
@@ -146,13 +166,8 @@ export default class DFClient extends Subscribeable {
     }
 
     order(column:string, direction: "ASC" | "DESC"): IPromise<any> {
+        this.query.$orderBy = column;
         this.query.$orderDirection = direction;
-
-        if (this.query.$settings.orderBy instanceof Function) {
-            this.query.$orderBy = Function.bind.apply(this.query.$settings.orderBy, [this.query, column]);
-        } else {
-            this.query.$orderBy = column;
-        }
 
         return this.send();
     }

@@ -8,7 +8,16 @@ export default class DFQuery {
 
     private settings: IDFQuerySettings = {
         page: 0,
-        limit: 10
+        limit: 10,
+        orderCallback: (order:string, direction:DFOrderDirection) => {
+            return [
+                order,
+                direction
+            ];
+        },
+        filterCallback: (filter) => {
+            return filter;
+        }
     };
 
     private dataResponseType: DFDataResponseType = DFDataResponseType.BODY;
@@ -65,18 +74,15 @@ export default class DFQuery {
     }
 
     get $order(): Array<string|DFOrderDirection> {
-        return [
-            this.settings.orderBy instanceof Function ? this.settings.orderBy() : this.settings.orderBy,
-            this.settings.orderDirection
-        ];
+        return this.settings.orderCallback.call(this, this.$orderBy, this.$orderDirection);
     }
 
-    set $orderBy(column: string | Function) {
+    set $orderBy(column: string) {
         this.settings.orderBy = column;
     }
 
-    get $orderBy(): string | Function {
-        return this.settings.orderBy instanceof Function ? this.settings.orderBy() : this.settings.orderBy;
+    get $orderBy(): string {
+        return this.settings.orderBy;
     }
 
     set $orderDirection(direction: "ASC" | "DESC") {
@@ -88,7 +94,7 @@ export default class DFQuery {
     }
 
     get $filter(): string {
-        return this.settings.filter instanceof Function ? this.settings.filter() : this.settings.filter;
+        return this.settings.filterCallback.call(this, this.settings.filter);
     }
 
     set $filter(q: string) {
@@ -136,9 +142,11 @@ export default class DFQuery {
 export interface IDFQuerySettings {
     page: number;
     limit: number;
-    orderBy?: string|Function;
+    orderBy?: string;
     orderDirection?: "ASC" | "DESC";
-    filter?: string|Function;
+    filter?: string;
+    orderCallback?: Function;
+    filterCallback?: Function;
 }
 
 export interface IDFParamsMap {
