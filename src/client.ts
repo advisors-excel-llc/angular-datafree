@@ -146,8 +146,13 @@ export default class DFClient extends Subscribeable {
     }
 
     order(column:string, direction: "ASC" | "DESC"): IPromise<any> {
-        this.query.$orderBy = column;
         this.query.$orderDirection = direction;
+
+        if (this.query.$settings.orderBy instanceof Function) {
+            this.query.$orderBy = Function.bind.apply(this.query.$settings.orderBy, [this.query, column]);
+        } else {
+            this.query.$orderBy = column;
+        }
 
         return this.send();
     }
