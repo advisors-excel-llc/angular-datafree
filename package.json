@@ -1,6 +1,6 @@
 {
   "name": "angular-datafree",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Render api data on the frontend freely",
   "main": "dist/angular-datafree.min.js",
   "scripts": {
