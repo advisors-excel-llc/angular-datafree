@@ -125,11 +125,11 @@ export default class DFClient extends Subscribeable {
     }
 
     prev(): IPromise<any> {
-        return this.page(this.query.$page - 1);
+        return this.page(this.query.$settings.page - 1);
     }
 
     next(): IPromise<any> {
-        return this.page(this.query.$page + 1);
+        return this.page(this.query.$settings.page + 1);
     }
 
     first(): IPromise<any> {
